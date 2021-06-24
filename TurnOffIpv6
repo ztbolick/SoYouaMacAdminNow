@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+import subprocess
+
+print('Checking ipv6')
+
+hasIpv6disabled = 'IPv6: Off'
+checkIpv6 = subprocess.run(['networksetup', '-getinfo', 'Wi-Fi'], capture_output=True, check=True,text=True)
+
+if hasIpv6disabled in checkIpv6.stdout:
+	print('Ipv6 is off exiting')
+	exit(0)
+
+
+print('Getting all available adapters')
+getAdapters = subprocess.run(['networksetup', '-listallnetworkservices'], capture_output=True, check=True,text=True)
+adapterArray = getAdapters.stdout.split('\n')
+
+# Remove first and last items
+del adapterArray[0]
+del adapterArray[-1]
+
+print('Turning off ipv6...')
+for adapter in adapterArray:
+	item = subprocess.run(['networksetup', '-setv6off', adapter], capture_output=True,text=True)
+	print(f'Turning off for: {adapter}')
+
+print('All adapters now running ipv4 only')
