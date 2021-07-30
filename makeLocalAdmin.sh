@@ -1,7 +1,7 @@
 #!/bin/sh
-LOCAL_ADMIN_FULLNAME=""
-LOCAL_ADMIN_SHORTNAME=""
-LOCAL_ADMIN_PASSWORD=""
+LOCAL_ADMIN_FULLNAME="Mike Tyson"
+LOCAL_ADMIN_SHORTNAME="mtyson"
+LOCAL_ADMIN_PASSWORD="1brokeMyBack"
 
 if [[ $LOCAL_ADMIN_SHORTNAME == `dscl . -list /Users UniqueID | awk '{print $1}' | grep $LOCAL_ADMIN_SHORTNAME` ]]; then
 	echo "User already exists!"
