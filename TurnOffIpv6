@@ -1,18 +1,16 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import subprocess
+import platform
 
-print('Checking ipv6')
+version = platform.python_version()
 
-hasIpv6disabled = 'IPv6: Off'
-checkIpv6 = subprocess.run(['networksetup', '-getinfo', 'Wi-Fi'], capture_output=True, check=True,text=True)
 
-if hasIpv6disabled in checkIpv6.stdout:
-	print('Ipv6 is off exiting')
-	exit(0)
+if version < "3.5":
+	raise Exception("Python 3.5 or a more recent version is required.")
 
 
 print('Getting all available adapters')
-getAdapters = subprocess.run(['networksetup', '-listallnetworkservices'], capture_output=True, check=True,text=True)
+getAdapters = subprocess.run(['networksetup', '-listallnetworkservices'], capture_output=True, text=True)
 adapterArray = getAdapters.stdout.split('\n')
 
 # Remove first and last items
